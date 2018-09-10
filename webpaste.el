@@ -217,11 +217,11 @@ precalculated, and also available both for pre and post request access.")
                  (message "Got error: %S" error-thrown)
                  (webpaste--paste-text text))))
 
-
-(cl-defun webpaste--providers-error-lambda-no-failover (&rest rest)
-  "Predefined error callback for providers that shouldn't do failover."
-  (cl-function (lambda (&key error-thrown &allow-other-keys)
-                 (message "Got error: %S" error-thrown))))
+(setf (symbol-function 'webpaste--providers-error-lambda-no-failover)
+      (lambda ()
+        "Predefined error callback for providers that shouldn't do failover."
+        (cl-function (lambda (&key error-thrown &allow-other-keys)
+                       (message "Got error: %S" error-thrown)))))
 
 
 ;;; Predefined success lambdas for providers
